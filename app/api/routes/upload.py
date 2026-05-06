@@ -1,13 +1,10 @@
 from fastapi import APIRouter, UploadFile, File
-import pandas as pd 
+from app.services.data_analysis_service import analyze_dataset
+from app.schemas.analysis_schema import AnalysisResponse
 
 router = APIRouter()
 
-@router.post("/upload")
+@router.post("/upload", response_model=AnalysisResponse)
 async def upload_file(file: UploadFile = File(...)):
-    df = pd.read_csv(file.file)
-
-    return {
-        "rows": df.shape[0],
-        "columns": df.shape[1]
-    }
+    result = analyze_dataset(file.file)
+    return result

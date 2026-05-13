@@ -9,7 +9,7 @@ from app.services.analysis.outliers import detect_outliers
 from app.services.analysis.correlations import calculate_correlations
 from app.services.analysis.warnings import generate_warnings
 from app.services.analysis.quality_score import calculate_quality_score
-
+from app.services.analysis.ml_outliers import detect_ml_outliers
 
 def analyze_dataset(file):
 
@@ -54,9 +54,14 @@ def analyze_dataset(file):
         numeric_cols
     )
 
-    outliers = detect_outliers(
+    statistical_outliers = detect_outliers(
         df,
         numeric_cols
+    )
+
+    ml_outliers = detect_ml_outliers(
+    df,
+    numeric_cols
     )
 
     # =========================
@@ -68,7 +73,7 @@ def analyze_dataset(file):
         duplicate_rows,
         constant_columns,
         correlations,
-        outliers,
+        statistical_outliers,
         basic_info["rows"]
     )
 
@@ -77,7 +82,7 @@ def analyze_dataset(file):
         duplicate_rows,
         constant_columns,
         correlations,
-        outliers,
+        statistical_outliers,
         basic_info["rows"]
     )
 
@@ -102,8 +107,11 @@ def analyze_dataset(file):
         "numeric_stats":
             numeric_stats,
 
-        "outliers":
-            outliers,
+        "statistical_outliers":
+            statistical_outliers,
+
+        "ml_outliers":
+            ml_outliers,
 
         "correlations":
             correlations,

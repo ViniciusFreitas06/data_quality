@@ -1,7 +1,7 @@
 import numpy as np
 
 def detect_outliers(df, numeric_cols):
-    outliers = {}
+    statistical_outliers = {}
 
     for col in numeric_cols:
         series = df[col].dropna()
@@ -11,7 +11,7 @@ def detect_outliers(df, numeric_cols):
 
         z_scores = (series - series.mean()) / series.std()
 
-        outliers[col] = int((np.abs(z_scores) > 3).sum())
+        statistical_outliers[col] = int((np.abs(z_scores) > 3).sum())
 
-    return outliers
+    return statistical_outliers
 

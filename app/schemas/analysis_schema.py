@@ -14,6 +14,7 @@ class AnalysisResponse(BaseModel):
     duplicate_rows: int
     constant_columns: List[str]
     numeric_stats: Dict[str, Any]
-    outliers: Dict[str, int]
+    statistical_outliers: Dict[str, int]
+    ml_outliers: Dict[str, Any]
     correlations: List[Dict[str, Any]]
     warnings: List[str]

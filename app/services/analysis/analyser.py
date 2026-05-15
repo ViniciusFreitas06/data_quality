@@ -10,6 +10,8 @@ from app.services.analysis.correlations import calculate_correlations
 from app.services.analysis.warnings import generate_warnings
 from app.services.analysis.quality_score import calculate_quality_score
 from app.services.analysis.ml_outliers import detect_ml_outliers
+from app.services.analysis.ml_targets import detect_ml_targets
+
 
 def analyze_dataset(file):
 
@@ -23,7 +25,7 @@ def analyze_dataset(file):
     )
 
     numeric_cols = df.select_dtypes(
-        include=np.number
+        include=["number"]
     ).columns
 
     # =========================
@@ -59,10 +61,16 @@ def analyze_dataset(file):
         numeric_cols
     )
 
+    # =========================
+    # ML Analysis
+    # =========================
+
     ml_outliers = detect_ml_outliers(
-    df,
-    numeric_cols
+        df,
+        numeric_cols
     )
+
+    ml_targets = detect_ml_targets(df)
 
     # =========================
     # Insights
@@ -93,7 +101,8 @@ def analyze_dataset(file):
     return {
         **basic_info,
 
-        "quality": quality,
+        "quality":
+            quality,
 
         "null_percentage":
             null_percentage.to_dict(),
@@ -112,6 +121,9 @@ def analyze_dataset(file):
 
         "ml_outliers":
             ml_outliers,
+
+        "possible_targets":
+            ml_targets,
 
         "correlations":
             correlations,

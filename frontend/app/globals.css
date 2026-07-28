@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  scrollbar-color: #232B33 #0A0D12;
+}
+
+body {
+  background-image:
+    linear-gradient(rgba(232, 236, 239, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 236, 239, 0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center top;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid #5B8DEF;
+  outline-offset: 2px;
+}
+
+::selection {
+  background: #5B8DEF;
+  color: #0A0D12;
+}
